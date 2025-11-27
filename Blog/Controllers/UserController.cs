@@ -4,6 +4,7 @@ using Blog.API.Models.DTOs.User;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Blog.API.Controllers
 {
@@ -54,7 +55,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpGet("Get/{id}")]
-        public async Task<ActionResult<UserFoundDTO>> GetUserByIdAsync(int id)
+        public async Task<ActionResult<UserFoundDTO?>> GetUserByIdAsync(int id)
         {
             try
             {
@@ -63,6 +64,24 @@ namespace Blog.API.Controllers
                     return NotFound();
 
                 return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> UpdateUserAsync(int id, UserRequestDTO userUpdate)
+        {
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(id);
+                if (user is null)
+                    return NotFound();
+
+                await _userService.UpdateUserAsync(user, userUpdate);
+
+                return Ok();
             }
             catch (Exception ex)
             {

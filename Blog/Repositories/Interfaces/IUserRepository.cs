@@ -10,5 +10,7 @@ namespace Blog.API.Repositories.Interfaces
         public Task<List<UserResponseDTO>> GetAllUsersAsync();
 
         public Task<UserFoundDTO?> GetUserByIdAsync(int id);
+
+        public Task UpdateUserAsync(User user, int id);
     }
 }

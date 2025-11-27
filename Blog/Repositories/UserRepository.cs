@@ -18,9 +18,12 @@ namespace Blog.API.Repositories
 
         public async Task CreateUserAsync(User user)
         {
-            var sql = "INSERT INTO [User] (Name, Email, PasswordHash, Bio, Image, Slug) VALUES (@Name, @Email, @PasswordHash, @Bio, @Image, @Slug)";
+            var sql = @"INSERT INTO [User] (Name, Email, PasswordHash, Bio, Image, Slug) 
+                            VALUES (@Name, @Email, @PasswordHash, @Bio, @Image, @Slug)";
 
-            await _connection.ExecuteAsync(sql, new {user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug});
+            await _connection.ExecuteAsync(sql, new {
+                user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug }
+            );
         }
 
         public async Task<List<UserResponseDTO>> GetAllUsersAsync()
@@ -35,6 +38,20 @@ namespace Blog.API.Repositories
             var sql = "SELECT * FROM [User]";
 
             return await _connection.QuerySingleOrDefaultAsync<UserFoundDTO>(sql, new { Id = id });
+        }
+
+        public async Task UpdateUserAsync(User user, int id)
+        {
+            var sql = @"UPDATE [User] SET [Name] = @Name, 
+                                        Email = @Email, 
+                                        PasswordHash = @PasswordHash, 
+                                        Bio = @Bio, 
+                                        [Image] = @Image, 
+                                        Slug = @Slug";
+
+            await _connection.ExecuteAsync(sql, new { 
+                user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug, Id = id }
+            );
         }
     }
 }
