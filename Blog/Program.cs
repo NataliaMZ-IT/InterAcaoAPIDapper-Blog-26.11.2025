@@ -12,6 +12,9 @@ builder.Services.AddSingleton<ConnectionDB>();
 builder.Services.AddSingleton<CategoryRepository>();
 builder.Services.AddSingleton<CategoryService>();
 
+builder.Services.AddSingleton<UserRepository>();
+builder.Services.AddSingleton<UserService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
