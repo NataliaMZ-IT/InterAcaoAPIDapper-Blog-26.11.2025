@@ -42,12 +42,14 @@ namespace Blog.API.Repositories
 
         public async Task UpdateUserAsync(User user, int id)
         {
-            var sql = @"UPDATE [User] SET [Name] = @Name, 
-                                        Email = @Email, 
-                                        PasswordHash = @PasswordHash, 
-                                        Bio = @Bio, 
-                                        [Image] = @Image, 
-                                        Slug = @Slug";
+            var sql = @"UPDATE [User] 
+                            SET [Name] = @Name, 
+                                Email = @Email, 
+                                PasswordHash = @PasswordHash, 
+                                Bio = @Bio, 
+                                [Image] = @Image, 
+                                Slug = @Slug
+                            WHERE Id = @Id";
 
             await _connection.ExecuteAsync(sql, new { 
                 user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug, Id = id }
