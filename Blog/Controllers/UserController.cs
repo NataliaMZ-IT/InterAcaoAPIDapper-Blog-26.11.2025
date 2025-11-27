@@ -88,5 +88,24 @@ namespace Blog.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteUserAsync(int id)
+        {
+            try
+            {
+                var user = _userService.GetUserByIdAsync(id);
+                if (user is null)
+                    return NotFound();
+
+                await _userService.DeleteUserAsync(user.Id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

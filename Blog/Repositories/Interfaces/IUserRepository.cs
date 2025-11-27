@@ -12,5 +12,7 @@ namespace Blog.API.Repositories.Interfaces
         public Task<UserFoundDTO?> GetUserByIdAsync(int id);
 
         public Task UpdateUserAsync(User user, int id);
+
+        public Task DeleteUserAsync(int id);
     }
 }

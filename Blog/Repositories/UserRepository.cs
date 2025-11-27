@@ -55,5 +55,12 @@ namespace Blog.API.Repositories
                 user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug, Id = id }
             );
         }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            var sql = "DELETE FROM [User] WHERE Id = @Id";
+
+            await _connection.ExecuteAsync(sql, new { Id = id });
+        }
     }
 }

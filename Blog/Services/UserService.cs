@@ -49,5 +49,10 @@ namespace Blog.API.Services
 
             await _userRepository.UpdateUserAsync(updatedUser, user.Id);
         }
+
+        public async Task DeleteUserAsync(int id)
+        {
+            await _userRepository.DeleteUserAsync(id);
+        }
     }
 }
