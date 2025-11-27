@@ -67,6 +67,7 @@ namespace Blog.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateUserAsync(int id, UserUpdateDTO userUpdate)
         {
@@ -91,7 +92,7 @@ namespace Blog.API.Controllers
         {
             try
             {
-                var user = _userService.GetUserByIdAsync(id);
+                var user = await _userService.GetUserByIdAsync(id);
                 if (user is null)
                     return NotFound();
 
