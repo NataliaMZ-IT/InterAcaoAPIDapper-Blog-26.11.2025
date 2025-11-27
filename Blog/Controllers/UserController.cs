@@ -39,7 +39,7 @@ namespace Blog.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<User>>> GetAllUsersAsync()
+        public async Task<ActionResult<List<UserResponseDTO>>> GetAllUsersAsync()
         {
             try
             {

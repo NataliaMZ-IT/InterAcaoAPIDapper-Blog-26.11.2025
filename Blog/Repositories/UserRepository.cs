@@ -1,5 +1,6 @@
 ﻿using Blog.API.Data;
 using Blog.API.Models;
+using Blog.API.Models.DTOs.User;
 using Blog.API.Repositories.Interfaces;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -22,11 +23,11 @@ namespace Blog.API.Repositories
             await _connection.ExecuteAsync(sql, new {user.Name, user.Email, user.PasswordHash, user.Bio, user.Image, user.Slug});
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+        public async Task<List<UserResponseDTO>> GetAllUsersAsync()
         {
             var sql = "SELECT Name, Email, Bio, Image, Slug FROM [User]";
 
-            return (await _connection.QueryAsync<User>(sql)).ToList();
+            return (await _connection.QueryAsync<UserResponseDTO>(sql)).ToList();
         }
     }
 }

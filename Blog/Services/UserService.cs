@@ -27,7 +27,7 @@ namespace Blog.API.Services
             await _userRepository.CreateUserAsync(newUser);
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+        public async Task<List<UserResponseDTO>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllUsersAsync();
         }

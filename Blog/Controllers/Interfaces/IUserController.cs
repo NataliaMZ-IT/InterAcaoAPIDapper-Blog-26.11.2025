@@ -10,6 +10,6 @@ namespace Blog.API.Controllers.Interfaces
 
         public Task<ActionResult> CreateUserAsync(UserRequestDTO user);
 
-        public Task<ActionResult<List<User>>> GetAllUsersAsync();
+        public Task<ActionResult<List<UserResponseDTO>>> GetAllUsersAsync();
     }
 }

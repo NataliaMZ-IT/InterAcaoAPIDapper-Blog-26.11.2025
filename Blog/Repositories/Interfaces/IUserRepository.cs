@@ -1,4 +1,5 @@
 ﻿using Blog.API.Models;
+using Blog.API.Models.DTOs.User;
 
 namespace Blog.API.Repositories.Interfaces
 {
@@ -6,6 +7,6 @@ namespace Blog.API.Repositories.Interfaces
     {
         public Task CreateUserAsync(User user);
 
-        public Task<List<User>> GetAllUsersAsync();
+        public Task<List<UserResponseDTO>> GetAllUsersAsync();
     }
 }
