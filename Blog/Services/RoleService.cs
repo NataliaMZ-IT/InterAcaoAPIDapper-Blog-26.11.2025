@@ -29,7 +29,7 @@ namespace Blog.API.Services
 
         public async Task<RoleFoundDTO?> FindRoleAsync(string name)
         {
-            var role = await _roleRepository.FindTagAsync(name);
+            var role = await _roleRepository.FindRoleAsync(name);
             if (role is null)
                 return null;
 
