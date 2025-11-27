@@ -39,26 +39,50 @@ namespace Blog.API.Controllers
             return Ok(tags);
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> UpdateTagAsync(TagUpdateDTO tagUpdate)
+        [HttpGet("Get/{id}")]
+        public async Task<ActionResult<TagFoundDTO?>> GetTagByIdAsync(int id)
         {
-            var tag = await _tagService.FindTagAsync(tagUpdate.OldName);
-            if (tag is null)
-                return NotFound();
+            try
+            {
+                var tag = await _tagService.GetTagByIdAsync(id);
+                if (tag is null)
+                    return NotFound();
 
-            await _tagService.UpdateTagAsync(tag, tagUpdate.NewName);
-
-            return Ok();
+                return Ok(tag);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
-        [HttpDelete("Delete")]
-        public async Task<IActionResult> DeleteTagAsync(TagRequestDTO tag)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> UpdateTagAsync(int id, TagRequestDTO tagUpdate)
         {
-            var tagFound = await _tagService.FindTagAsync(tag.Name);
+            try
+            {
+                var tag = await _tagService.GetTagByIdAsync(id);
+                if (tag is null)
+                    return NotFound();
+
+                await _tagService.UpdateTagAsync(tag.Id, tagUpdate);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteTagAsync(int id)
+        {
+            var tagFound = await _tagService.GetTagByIdAsync(id);
             if (tagFound is null)
                 return NotFound();
 
-            await _tagService.DeleteTagAsync(tagFound);
+            await _tagService.DeleteTagAsync(tagFound.Id);
 
             return NoContent();
         }

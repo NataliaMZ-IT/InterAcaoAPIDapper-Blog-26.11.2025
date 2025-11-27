@@ -19,35 +19,35 @@ namespace Blog.API.Repositories
 
         public async Task CreateRoleAsync(Role role)
         {
-            var sql = "INSERT INTO Role (Name, Slug) VALUES (@Name, @Slug)";
+            var sql = "INSERT INTO [Role] (Name, Slug) VALUES (@Name, @Slug)";
 
             await _connection.ExecuteAsync(sql, new { role.Name, role.Slug });
         }
 
         public async Task<List<RoleResponseDTO>> GetAllRoleAsync()
         {
-            var sql = "SELECT Name, Slug FROM Role";
+            var sql = "SELECT Name, Slug FROM [Role]";
 
             return (await _connection.QueryAsync<RoleResponseDTO>(sql)).ToList();
         }
 
-        public async Task<RoleFoundDTO?> FindRoleAsync(string name)
+        public async Task<RoleFoundDTO?> GetRoleByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Role WHERE Name = @Name";
+            var sql = "SELECT * FROM [Role] WHERE Id = @Id";
 
-            return await _connection.QueryFirstOrDefaultAsync<RoleFoundDTO>(sql, new { Name = name });
+            return await _connection.QueryFirstOrDefaultAsync<RoleFoundDTO>(sql, new { Id = id });
         }
 
         public async Task UpdateRoleAsync(Role role, int id)
         {
-            var sql = "UPDATE Role SET Name = @Name, Slug = @Slug WHERE Id = @Id";
+            var sql = "UPDATE [Role] SET Name = @Name, Slug = @Slug WHERE Id = @Id";
 
             await _connection.ExecuteAsync(sql, new { role.Name, role.Slug, Id = id });
         }
 
         public async Task DeleteRoleAsync(int id)
         {
-            var sql = "DELETE FROM Role WHERE Id = @Id";
+            var sql = "DELETE FROM [Role] WHERE Id = @Id";
 
             await _connection.ExecuteAsync(sql, new { Id = id });
         }

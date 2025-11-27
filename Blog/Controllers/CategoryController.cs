@@ -32,6 +32,23 @@ namespace Blog.API.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("Get/{id}")]
+        public async Task<ActionResult<CategoryFoundDTO?>> GetCategoryByIdAsync(int id)
+        {
+            try
+            {
+                var category = await _categoryService.GetCategoryByIdAsync(id);
+                if (category is null)
+                    return NotFound();
+
+                return Ok(category);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
         [HttpPost("Create")]
         public async Task<ActionResult> CreateCategoryAsync(CategoryRequestDTO category)
         {
@@ -40,30 +57,44 @@ namespace Blog.API.Controllers
             return Created();
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdate)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> UpdateCategoryAsync(int id, CategoryRequestDTO categoryUpdate)
         {
-            var category = await _categoryService.FindCategoryAsync(categoryUpdate.OldName);
+            try
+            {
+                var category = await _categoryService.GetCategoryByIdAsync(id);
 
-            if (category is null)
-                return NotFound();
+                if (category is null)
+                    return NotFound();
 
-            await _categoryService.UpdateCategoryAsync(category, categoryUpdate.NewName);
+                await _categoryService.UpdateCategoryAsync(category.Id, categoryUpdate);
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
-        [HttpDelete("Delete")]
-        public async Task<IActionResult> DeleteCategoryAsync(CategoryRequestDTO category)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
-            var categoryFound = await _categoryService.FindCategoryAsync(category.Name);
+            try
+            {
+                var categoryFound = await _categoryService.GetCategoryByIdAsync(id);
 
-            if (categoryFound is null)
-                return NotFound();
+                if (categoryFound is null)
+                    return NotFound();
 
-            await _categoryService.DeleteCategoryAsync(categoryFound);
+                await _categoryService.DeleteCategoryAsync(categoryFound.Id);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Blog.API.Controllers.Interfaces;
+using Blog.API.Models.DTOs.Category;
 using Blog.API.Models.DTOs.Role;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Http;
@@ -38,28 +39,59 @@ namespace Blog.API.Controllers
             return Ok(roles);
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> UpdateRoleAsync(RoleUpdateDTO roleUpdate)
+        [HttpGet("Get/{id}")]
+        public async Task<ActionResult<RoleFoundDTO?>> GetRoleByIdAsync(int id)
         {
-            var role = await _roleService.FindRoleAsync(roleUpdate.OldName);
-            if (role is null)
-                return NotFound();
+            try
+            {
+                var role = await _roleService.GetRoleByIdAsync(id);
+                if (role is null)
+                    return NotFound();
 
-            await _roleService.UpdateRoleAsync(role, roleUpdate.NewName);
-
-            return Ok();
+                return Ok(role);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
-        [HttpDelete("Delete")]
-        public async Task<IActionResult> DeleteRoleAsync(RoleRequestDTO role)
+        [HttpPut("Update/{id}")]
+        public async Task<IActionResult> UpdateRoleAsync(int id, RoleRequestDTO roleUpdate)
         {
-            var roleFound = await _roleService.FindRoleAsync(role.Name);
-            if (roleFound is null)
-                return NotFound();
+            try
+            {
+                var role = await _roleService.GetRoleByIdAsync(id);
+                if (role is null)
+                    return NotFound();
 
-            await _roleService.DeleteRoleAsync(roleFound);
+                await _roleService.UpdateRoleAsync(role.Id, roleUpdate);
 
-            return NoContent();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteRoleAsync(int id)
+        {
+            try
+            {
+                var roleFound = await _roleService.GetRoleByIdAsync(id);
+                if (roleFound is null)
+                    return NotFound();
+
+                await _roleService.DeleteRoleAsync(roleFound.Id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }

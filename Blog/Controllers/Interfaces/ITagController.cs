@@ -11,8 +11,10 @@ namespace Blog.API.Controllers.Interfaces
 
         public Task<ActionResult> CreateTagAsync(TagRequestDTO tag);
 
-        public Task<IActionResult> UpdateTagAsync(TagUpdateDTO tagUpdate);
+        public Task<ActionResult<TagFoundDTO?>> GetTagByIdAsync(int id);
 
-        public Task<IActionResult> DeleteTagAsync(TagRequestDTO tag);
+        public Task<IActionResult> UpdateTagAsync(int id, TagRequestDTO tagUpdate);
+
+        public Task<IActionResult> DeleteTagAsync(int id);
     }
 }

@@ -11,8 +11,10 @@ namespace Blog.API.Controllers.Interfaces
 
         public Task<ActionResult> CreateCategoryAsync(CategoryRequestDTO category);
 
-        public Task<IActionResult> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdate);
+        public Task<ActionResult<CategoryFoundDTO?>> GetCategoryByIdAsync(int id);
 
-        public Task<IActionResult> DeleteCategoryAsync(CategoryRequestDTO category);
+        public Task<IActionResult> UpdateCategoryAsync(int id, CategoryRequestDTO categoryUpdate);
+
+        public Task<IActionResult> DeleteCategoryAsync(int id);
     }
 }

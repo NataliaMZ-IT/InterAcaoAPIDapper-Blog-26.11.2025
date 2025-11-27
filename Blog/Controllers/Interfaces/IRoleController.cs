@@ -11,8 +11,10 @@ namespace Blog.API.Controllers.Interfaces
 
         public Task<ActionResult> CreateRoleAsync(RoleRequestDTO role);
 
-        public Task<IActionResult> UpdateRoleAsync(RoleUpdateDTO roleUpdate);
+        public Task<ActionResult<RoleFoundDTO?>> GetRoleByIdAsync(int id);
 
-        public Task<IActionResult> DeleteRoleAsync(RoleRequestDTO role);
+        public Task<IActionResult> UpdateRoleAsync(int id, RoleRequestDTO roleUpdate);
+
+        public Task<IActionResult> DeleteRoleAsync(int id);
     }
 }

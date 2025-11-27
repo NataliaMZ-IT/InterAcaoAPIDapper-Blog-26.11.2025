@@ -30,11 +30,11 @@ namespace Blog.API.Repositories
             await _connection.ExecuteAsync(sql, new { category.Name, category.Slug });
         }
 
-        public async Task<CategoryFoundDTO?> FindCategoryAsync(string name)
+        public async Task<CategoryFoundDTO?> GetCategoryByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Category WHERE Name = @Name";
+            var sql = "SELECT * FROM Category WHERE Id = @Id";
 
-            return await _connection.QueryFirstOrDefaultAsync<CategoryFoundDTO>(sql, new { Name = name });
+            return await _connection.QueryFirstOrDefaultAsync<CategoryFoundDTO>(sql, new { Id = id });
         }
 
         public async Task UpdateCategoryAsync(Category category, int id)

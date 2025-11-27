@@ -27,26 +27,31 @@ namespace Blog.API.Services
             return await _tagRepository.GetAllTagAsync();
         }
 
-        public async Task<TagFoundDTO?> FindTagAsync(string name)
+        public async Task<TagFoundDTO?> GetTagByIdAsync(int id)
         {
-            var tag = await _tagRepository.FindTagAsync(name);
-            if (tag is null)
-                return null;
+            var tag = await _tagRepository.FindTagAsync(id) ?? null;
 
             return tag;
         }
 
-        public async Task UpdateTagAsync(TagFoundDTO oldTag, string newTag)
+        public async Task UpdateTagAsync(int id, TagRequestDTO tagUpdate)
         {
-            var updatedTag = new Tag(newTag,
-                                     newTag.ToLower().Replace(" ", "-"));
+            var updatedTag = new Tag(tagUpdate.Name,
+                                     tagUpdate.Name.ToLower().Replace(" ", "-"));
 
-            await _tagRepository.UpdateTagAsync(updatedTag, oldTag.Id);
+            await _tagRepository.UpdateTagAsync(updatedTag, id);
         }
 
-        public async Task DeleteTagAsync(TagFoundDTO tag)
+        public async Task DeleteTagAsync(int id)
         {
-            await _tagRepository.DeleteTagAsync(tag.Id);
+            try
+            {
+                await _tagRepository.DeleteTagAsync(id);
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.StackTrace);
+            }
         }
     }
 }

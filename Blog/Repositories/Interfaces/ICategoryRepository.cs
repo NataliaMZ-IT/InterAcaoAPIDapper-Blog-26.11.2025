@@ -10,7 +10,7 @@ namespace Blog.API.Repositories.Interfaces
 
         public Task CreateCategoryAsync(Category category);
 
-        public Task<CategoryFoundDTO?> FindCategoryAsync(string name);
+        public Task<CategoryFoundDTO?> GetCategoryByIdAsync(int id);
 
         public Task UpdateCategoryAsync(Category category, int id);
 

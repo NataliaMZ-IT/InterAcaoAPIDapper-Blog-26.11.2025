@@ -8,10 +8,10 @@ namespace Blog.API.Services.Interfaces
 
         public Task CreateTagAsync(TagRequestDTO tag);
 
-        public Task<TagFoundDTO?> FindTagAsync(string name);
+        public Task<TagFoundDTO?> GetTagByIdAsync(int id);
 
-        public Task UpdateTagAsync(TagFoundDTO oldTag, string newTag);
+        public Task UpdateTagAsync(int id, TagRequestDTO tagUpdate);
 
-        public Task DeleteTagAsync(TagFoundDTO tag);
+        public Task DeleteTagAsync(int id);
     }
 }

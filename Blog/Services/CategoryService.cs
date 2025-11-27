@@ -27,9 +27,9 @@ namespace Blog.API.Services
             await _categoryRepository.CreateCategoryAsync(newCategory);
         }
 
-        public async Task<CategoryFoundDTO?> FindCategoryAsync(string name)
+        public async Task<CategoryFoundDTO?> GetCategoryByIdAsync(int id)
         {
-            var category = await _categoryRepository.FindCategoryAsync(name);
+            var category = await _categoryRepository.GetCategoryByIdAsync(id);
 
             if (category is null)
                 return null;
@@ -37,17 +37,17 @@ namespace Blog.API.Services
             return category;
         }
 
-        public async Task UpdateCategoryAsync(CategoryFoundDTO oldCategory, string newCategory)
+        public async Task UpdateCategoryAsync(int id, CategoryRequestDTO categoryUpdate)
         {
-            var updatedCategory = new Category ( newCategory,
-                                                 newCategory.ToLower().Replace(" ", "-") );
+            var updatedCategory = new Category ( categoryUpdate.Name,
+                                                 categoryUpdate.Name.ToLower().Replace(" ", "-") );
 
-            await _categoryRepository.UpdateCategoryAsync(updatedCategory, oldCategory.Id);
+            await _categoryRepository.UpdateCategoryAsync(updatedCategory, id);
         }
 
-        public async Task DeleteCategoryAsync(CategoryFoundDTO category)
+        public async Task DeleteCategoryAsync(int id)
         {
-            await _categoryRepository.DeleteCategoryAsync(category.Id);
+            await _categoryRepository.DeleteCategoryAsync(id);
         }
     }
 }

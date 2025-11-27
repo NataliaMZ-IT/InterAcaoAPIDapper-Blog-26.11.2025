@@ -31,11 +31,11 @@ namespace Blog.API.Repositories
             return (await _connection.QueryAsync<TagResponseDTO>(sql)).ToList();
         }
 
-        public async Task<TagFoundDTO?> FindTagAsync(string name)
+        public async Task<TagFoundDTO?> GetTagByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Tag WHERE Name = @Name";
+            var sql = "SELECT * FROM Tag WHERE Id = @Id";
 
-            return await _connection.QueryFirstOrDefaultAsync<TagFoundDTO>(sql, new { Name = name });
+            return await _connection.QueryFirstOrDefaultAsync<TagFoundDTO>(sql, new { Id = id });
         }
 
         public async Task UpdateTagAsync(Tag tag, int id)

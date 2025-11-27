@@ -9,10 +9,10 @@ namespace Blog.API.Services.Interfaces
 
         public Task CreateCategoryAsync(CategoryRequestDTO category);
 
-        public Task<CategoryFoundDTO?> FindCategoryAsync(string name);
+        public Task<CategoryFoundDTO?> GetCategoryByIdAsync(int id);
 
-        public Task UpdateCategoryAsync(CategoryFoundDTO oldCategory, string newCategory);
+        public Task UpdateCategoryAsync(int id, CategoryRequestDTO categoryUpdate);
 
-        public Task DeleteCategoryAsync(CategoryFoundDTO category);
+        public Task DeleteCategoryAsync(int id);
     }
 }

@@ -10,7 +10,7 @@ namespace Blog.API.Repositories.Interfaces
 
         public Task CreateTagAsync(Tag tag);
 
-        public Task<TagFoundDTO?> FindTagAsync(string name);
+        public Task<TagFoundDTO?> GetTagByIdAsync(int id);
 
         public Task UpdateTagAsync(Tag tag, int id);
 

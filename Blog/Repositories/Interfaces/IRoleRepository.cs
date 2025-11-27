@@ -10,7 +10,7 @@ namespace Blog.API.Repositories.Interfaces
 
         public Task CreateRoleAsync(Role role);
 
-        public Task<RoleFoundDTO?> FindRoleAsync(string name);
+        public Task<RoleFoundDTO?> GetRoleByIdAsync(int id);
 
         public Task UpdateRoleAsync(Role role, int id);
 

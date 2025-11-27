@@ -8,10 +8,10 @@ namespace Blog.API.Services.Interfaces
 
         public Task CreateRoleAsync(RoleRequestDTO role);
 
-        public Task<RoleFoundDTO?> FindRoleAsync(string name);
+        public Task<RoleFoundDTO?> GetRoleByIdAsync(int id);
 
-        public Task UpdateRoleAsync(RoleFoundDTO oldRole, string newRole);
+        public Task UpdateRoleAsync(int id, RoleRequestDTO roleUpdate);
 
-        public Task DeleteRoleAsync(RoleFoundDTO role);
+        public Task DeleteRoleAsync(int id);
     }
 }
