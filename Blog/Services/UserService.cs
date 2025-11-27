@@ -1,6 +1,6 @@
 ﻿using Blog.API.Data;
 using Blog.API.Models;
-using Blog.API.Models.DTOs;
+using Blog.API.Models.DTOs.User;
 using Blog.API.Repositories;
 using Blog.API.Services.Interfaces;
 using Microsoft.Data.SqlClient;

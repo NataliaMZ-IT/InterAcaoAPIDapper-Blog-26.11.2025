@@ -1,6 +1,6 @@
 ﻿using Blog.API.Controllers.Interfaces;
 using Blog.API.Models;
-using Blog.API.Models.DTOs;
+using Blog.API.Models.DTOs.Category;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-﻿using Blog.API.Models.DTOs;
+﻿using Blog.API.Models.DTOs.User;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
