@@ -1,10 +1,7 @@
 ﻿using Blog.API.Controllers.Interfaces;
-using Blog.API.Models;
 using Blog.API.Models.DTOs.User;
 using Blog.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Blog.API.Controllers
 {
@@ -46,7 +43,7 @@ namespace Blog.API.Controllers
             {
                 var users = await _userService.GetAllUsersAsync();
 
-                return Ok();
+                return Ok(users);
             }
             catch (Exception ex) 
             {
@@ -71,7 +68,7 @@ namespace Blog.API.Controllers
             }
         }
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, UserRequestDTO userUpdate)
+        public async Task<IActionResult> UpdateUserAsync(int id, UserUpdateDTO userUpdate)
         {
             try
             {

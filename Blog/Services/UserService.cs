@@ -34,10 +34,10 @@ namespace Blog.API.Services
 
         public async Task<UserFoundDTO?> GetUserByIdAsync(int id)
         {
-            return await _userRepository.GetUserByIdAsync(id) ?? null;
+            return (await _userRepository.GetUserByIdAsync(id)) ?? null;
         }
 
-        public async Task UpdateUserAsync(UserFoundDTO user, UserRequestDTO userUpdate)
+        public async Task UpdateUserAsync(UserFoundDTO user, UserUpdateDTO userUpdate)
         {
             var updatedUser = new User(userUpdate.Name ?? user.Name,
                                        userUpdate.Email ?? user.Email,
