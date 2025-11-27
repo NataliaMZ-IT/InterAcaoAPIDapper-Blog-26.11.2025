@@ -11,5 +11,7 @@ namespace Blog.API.Controllers.Interfaces
         public Task<ActionResult> CreateUserAsync(UserRequestDTO user);
 
         public Task<ActionResult<List<UserResponseDTO>>> GetAllUsersAsync();
+
+        public Task<ActionResult<UserFoundDTO?>> GetUserByIdAsync(int id);
     }
 }

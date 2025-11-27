@@ -31,5 +31,10 @@ namespace Blog.API.Services
         {
             return await _userRepository.GetAllUsersAsync();
         }
+
+        public async Task<UserFoundDTO?> GetUserByIdAsync(int id)
+        {
+            return await _userRepository.GetUserByIdAsync(id) ?? null;
+        }
     }
 }

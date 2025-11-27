@@ -29,5 +29,12 @@ namespace Blog.API.Repositories
 
             return (await _connection.QueryAsync<UserResponseDTO>(sql)).ToList();
         }
+
+        public async Task<UserFoundDTO?> GetUserByIdAsync(int id)
+        {
+            var sql = "SELECT * FROM [User]";
+
+            return await _connection.QuerySingleOrDefaultAsync<UserFoundDTO>(sql, new { Id = id });
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace Blog.API.Services.Interfaces
         public Task CreateUserAsync(UserRequestDTO user);
 
         public Task<List<UserResponseDTO>> GetAllUsersAsync();
+
+        public Task<UserFoundDTO?> GetUserByIdAsync(int id);
     }
 }

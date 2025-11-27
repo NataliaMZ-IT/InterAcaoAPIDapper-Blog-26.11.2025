@@ -52,5 +52,22 @@ namespace Blog.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("Get/{id}")]
+        public async Task<ActionResult<UserFoundDTO>> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(id);
+                if (user is null)
+                    return NotFound();
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
