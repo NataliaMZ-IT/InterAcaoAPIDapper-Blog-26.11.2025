@@ -35,7 +35,7 @@ namespace Blog.API.Repositories
 
         public async Task<UserFoundDTO?> GetUserByIdAsync(int id)
         {
-            var sql = "SELECT * FROM [User]";
+            var sql = "SELECT * FROM [User] WHERE Id = @Id";
 
             return await _connection.QuerySingleOrDefaultAsync<UserFoundDTO>(sql, new { Id = id });
         }
