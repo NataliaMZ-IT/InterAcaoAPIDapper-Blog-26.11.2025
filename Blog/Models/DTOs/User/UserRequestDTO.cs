@@ -5,7 +5,9 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string Bio {  get; set; }
-        public string Image {  get; set; }
+        public string Bio { get; set; } = string.Empty;
+        public string Image { get; set; } = string.Empty;
+
+
     }
 }

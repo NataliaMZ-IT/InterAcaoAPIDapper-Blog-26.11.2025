@@ -1,5 +1,6 @@
 ﻿using Blog.API.Data;
 using Blog.API.Models;
+using Blog.API.Models.DTOs.Role;
 using Blog.API.Models.DTOs.User;
 using Blog.API.Repositories.Interfaces;
 using Dapper;
@@ -61,6 +62,76 @@ namespace Blog.API.Repositories
             var sql = "DELETE FROM [User] WHERE Id = @Id";
 
             await _connection.ExecuteAsync(sql, new { Id = id });
+        }
+
+        public async Task<List<UserResponseDTO>> GetAllUserRolesAsync()
+        {
+            var sql = @"SELECT u.Name, u.Email, u.Bio, u.Image, u.Slug, r.Name, r.Slug
+                        FROM [User] u
+                        JOIN [UserRole] ur ON u.id = ur.UserId
+                        JOIN [Role] r ON r.Id = ur.RoleId";
+
+            try
+            {
+                var userRoles = await _connection.QueryAsync<UserResponseDTO, RoleResponseDTO, UserResponseDTO>(
+                    sql,
+                    (user, role) => 
+                    { 
+                        user.Roles.Add(role);
+                        return user;
+                    },
+                    splitOn: "Name"
+                );
+
+                userRoles = userRoles.GroupBy(u => u.Email).Select(gu =>
+                {
+                    var groupedUser = gu.First();
+                    groupedUser.Roles = gu.Select(u => u.Roles.Single()).ToList();
+                    return groupedUser;
+                });
+
+                return userRoles.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.StackTrace);
+            }
+        }
+
+        public async Task<UserResponseDTO> GetUserRolesByIdAsync(int id)
+        {
+            var sql = @"SELECT u.Name, u.Email, u.Bio, u.Image, u.Slug, r.Name, r.Slug
+                        FROM [User] u
+                        JOIN [UserRole] ur ON u.Id = ur.UserId
+                        JOIN [Role] r ON r.Id = ur.RoleId
+                        WHERE u.Id = @Id";
+
+            try
+            {
+                var userRole = await _connection.QueryAsync<UserResponseDTO, RoleResponseDTO, UserResponseDTO>(
+                    sql,
+                    (user, role) =>
+                    {
+                        user.Roles.Add(role);
+                        return user;
+                    },
+                    param: new { Id = id },
+                    splitOn: "Name"
+                    );
+
+                userRole = userRole.GroupBy(u => u.Email).Select(gu =>
+                {
+                    var groupedUser = gu.First();
+                    groupedUser.Roles = gu.Select(u => u.Roles.Single()).ToList();
+                    return groupedUser;
+                });
+
+                return userRole.First();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.StackTrace);
+            }
         }
     }
 }

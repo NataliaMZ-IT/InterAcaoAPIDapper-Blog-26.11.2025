@@ -12,7 +12,11 @@ namespace Blog.API.Controllers.Interfaces
 
         public Task<ActionResult<List<UserResponseDTO>>> GetAllUsersAsync();
 
+        public Task<ActionResult<List<UserResponseDTO>>> GetAllUserRolesAsync();
+
         public Task<ActionResult<UserFoundDTO?>> GetUserByIdAsync(int id);
+
+        public Task<ActionResult<UserRequestDTO>> GetUserRolesByIdAsynce(int id);
 
         public Task<IActionResult> UpdateUserAsync(int id, UserUpdateDTO userUpdate);
 

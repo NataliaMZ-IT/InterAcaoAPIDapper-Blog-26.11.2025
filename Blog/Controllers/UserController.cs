@@ -1,4 +1,5 @@
 ﻿using Blog.API.Controllers.Interfaces;
+using Blog.API.Models;
 using Blog.API.Models.DTOs.User;
 using Blog.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,21 @@ namespace Blog.API.Controllers
             }
         }
 
+        [HttpGet("GetAllUserRoles")]
+        public async Task<ActionResult<List<UserResponseDTO>>> GetAllUserRolesAsync()
+        {
+            try
+            {
+                var userRoles = await _userService.GetAllUserRolesAsync();
+
+                return Ok(userRoles);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
         [HttpGet("Get/{id}")]
         public async Task<ActionResult<UserFoundDTO?>> GetUserByIdAsync(int id)
         {
@@ -65,6 +81,23 @@ namespace Blog.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetRoles/{id}")]
+        public async Task<ActionResult<UserRequestDTO>> GetUserRolesByIdAsynce(int id)
+        {
+            try
+            {
+                var userRole = await _userService.GetUserRolesById(id);
+                if (userRole is null)
+                    return NotFound();
+
+                return Ok(userRole);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
             }
         }
 

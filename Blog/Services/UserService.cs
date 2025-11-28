@@ -54,5 +54,29 @@ namespace Blog.API.Services
         {
             await _userRepository.DeleteUserAsync(id);
         }
+
+        public async Task<List<UserResponseDTO>> GetAllUserRolesAsync()
+        {
+            try
+            {
+                return await _userRepository.GetAllUserRolesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.StackTrace);
+            }
+        }
+
+        public async Task<UserResponseDTO> GetUserRolesById(int id)
+        {
+            try
+            {
+                return await _userRepository.GetUserRolesByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.StackTrace);
+            }
+        }
     }
 }
