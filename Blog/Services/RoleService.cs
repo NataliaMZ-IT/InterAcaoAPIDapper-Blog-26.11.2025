@@ -17,10 +17,17 @@ namespace Blog.API.Services
 
         public async Task CreateRoleAsync(RoleRequestDTO role)
         {
-            var newRole = new Role(role.Name,
-                                   role.Name.ToLower().Replace(" ", "-"));
+            try
+            {
+                var newRole = new Role(role.Name,
+                                       role.Name.ToLower().Replace(" ", "-"));
 
-            await _roleRepository.CreateRoleAsync(newRole);
+                await _roleRepository.CreateRoleAsync(newRole);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.StackTrace);
+            }
         }
 
         public async Task<List<RoleResponseDTO>> GetAllRolesAsync()
@@ -30,7 +37,7 @@ namespace Blog.API.Services
 
         public async Task<RoleFoundDTO?> GetRoleByIdAsync(int id)
         {
-            var role = await _roleRepository.FindRoleAsync(id);
+            var role = await _roleRepository.GetRoleByIdAsync(id);
             if (role is null)
                 return null;
 

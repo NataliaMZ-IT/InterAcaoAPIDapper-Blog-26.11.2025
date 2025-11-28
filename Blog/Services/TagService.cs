@@ -29,7 +29,7 @@ namespace Blog.API.Services
 
         public async Task<TagFoundDTO?> GetTagByIdAsync(int id)
         {
-            var tag = await _tagRepository.FindTagAsync(id) ?? null;
+            var tag = await _tagRepository.GetTagByIdAsync(id) ?? null;
 
             return tag;
         }
